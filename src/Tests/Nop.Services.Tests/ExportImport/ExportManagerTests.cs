@@ -46,8 +46,10 @@ namespace Nop.Services.Tests.ExportImport
         private CatalogSettings _catalogSettings;
         private IGenericAttributeService _genericAttributeService;
         private ICustomerAttributeFormatter _customerAttributeFormatter;
+        private CategoryEditorSettings _categoryEditorSettings;
+        private ManufacturerEditorSettings _manufacturerEditorSettings;
 
-        [SetUp]
+       [SetUp]
         public new void SetUp()
         {
             _storeService = MockRepository.GenerateMock<IStoreService>();
@@ -66,15 +68,19 @@ namespace Nop.Services.Tests.ExportImport
             _catalogSettings=new CatalogSettings();
             _genericAttributeService = MockRepository.GenerateMock<IGenericAttributeService>();
             _customerAttributeFormatter = MockRepository.GenerateMock<ICustomerAttributeFormatter>();
-            
 
-            _exportManager = new ExportManager(_categoryService,
+            _categoryEditorSettings = new CategoryEditorSettings();
+           _manufacturerEditorSettings = new ManufacturerEditorSettings();
+
+
+           _exportManager = new ExportManager(_categoryService,
                 _manufacturerService, _productAttributeService,
                 _pictureService, _newsLetterSubscriptionService,
                 _storeService, _workContext, _productEditorSettings,
                 _vendorService, _productTemplateService, _dateRangeService,
                 _taxCategoryService, _measureService, _catalogSettings,
-                 _genericAttributeService, _customerAttributeFormatter);
+                 _genericAttributeService, _customerAttributeFormatter,
+                 _categoryEditorSettings, _manufacturerEditorSettings);
         }
 
         //[Test]

@@ -102,6 +102,8 @@
     <Compile Include="ComponentModel\GenericDictionaryTypeConverter.cs" />
     <Compile Include="ComponentModel\WriteLockDisposable.cs" />
     <Compile Include="Domain\Blogs\Events.cs" />
+    <Compile Include="Domain\Catalog\CategoryEditorSettings.cs" />
+    <Compile Include="Domain\Catalog\ManufacturerEditorSettings.cs" />
     <Compile Include="Domain\Catalog\ProductEditorSettings.cs" />
     <Compile Include="Domain\Catalog\Events.cs" />
     <Compile Include="Domain\Catalog\PredefinedProductAttributeValue.cs" />
