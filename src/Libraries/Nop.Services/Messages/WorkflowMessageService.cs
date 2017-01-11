@@ -898,6 +898,43 @@ namespace Nop.Services.Messages
             return SendNotification(messageTemplate, emailAccount, languageId, tokens, toEmail, toName);
         }
 
+        /// <summary>
+        /// Sends a "Recurring payment failed and cancelled" notification to a customer
+        /// </summary>
+        /// <param name="recurringPayment">Recurring payment</param>
+        /// <param name="languageId">Message language identifier</param>
+        /// <returns>Queued email identifier</returns>
+        public virtual int SendRecurringPaymentFailedAndCancelledCustomerNotification(RecurringPayment recurringPayment, int languageId)
+        {
+            if (recurringPayment == null)
+                throw new ArgumentNullException("recurringPayment");
+
+            var store = _storeService.GetStoreById(recurringPayment.InitialOrder.StoreId) ?? _storeContext.CurrentStore;
+            languageId = EnsureLanguageIsActive(languageId, store.Id);
+
+            var messageTemplate = GetActiveMessageTemplate(MessageTemplateSystemNames.RecurringPaymentFailedAndCancelledCustomerNotification, store.Id);
+            if (messageTemplate == null)
+                return 0;
+
+            //email account
+            var emailAccount = GetEmailAccountOfMessageTemplate(messageTemplate, languageId);
+
+            //tokens
+            var tokens = new List<Token>();
+            _messageTokenProvider.AddStoreTokens(tokens, store, emailAccount);
+            _messageTokenProvider.AddOrderTokens(tokens, recurringPayment.InitialOrder, languageId);
+            _messageTokenProvider.AddCustomerTokens(tokens, recurringPayment.InitialOrder.Customer);
+            _messageTokenProvider.AddRecurringPaymentTokens(tokens, recurringPayment);
+
+            //event notification
+            _eventPublisher.MessageTokensAdded(messageTemplate, tokens);
+
+            var toEmail = emailAccount.Email;
+            var toName = emailAccount.DisplayName;
+
+            return SendNotification(messageTemplate, emailAccount, languageId, tokens, toEmail, toName);
+        }
+
         #endregion
 
         #region Newsletter workflow

@@ -5497,6 +5497,14 @@ namespace Nop.Services.Installation
                 },
                 new MessageTemplate
                 {
+                    Name = MessageTemplateSystemNames.RecurringPaymentFailedAndCancelledCustomerNotification,
+                    Subject = "%Store.Name%. Recurring payment %RecurringPayment.ID% cancelled",
+                    Body = string.Format("<p>{0}<a href=\"%Store.URL%\">%Store.Name%</a>{0}<br />{0}<br />{0}Hello %Customer.FullName%,{0}<br />{0}It appears your credit card didn't go through for this recurring payment (<a href=\"%Order.OrderURLForCustomer%\" target=\"_blank\">%Order.OrderURLForCustomer%</a>){0}<br />{0}So your subscription has been canceled.{0}</p>{0}", Environment.NewLine),
+                    IsActive = true,
+                    EmailAccountId = eaGeneral.Id,
+                },
+                new MessageTemplate
+                {
                     Name = MessageTemplateSystemNames.OrderPlacedVendorNotification,
                     Subject = "%Store.Name%. Order placed",
                     Body = string.Format("<p>{0}<a href=\"%Store.URL%\">%Store.Name%</a>{0}<br />{0}<br />{0}%Customer.FullName% (%Customer.Email%) has just placed an order.{0}<br />{0}<br />{0}Order Number: %Order.OrderNumber%{0}<br />{0}Date Ordered: %Order.CreatedOn%{0}<br />{0}<br />{0}%Order.Product(s)%{0}</p>{0}", Environment.NewLine),

@@ -1833,6 +1833,13 @@ namespace Nop.Services.Orders
                     var logError = processPaymentResult.Errors.Aggregate("Error while processing recurring order. ",
                         (current, next) => string.Format("{0}Error {1}: {2}. ", current, processPaymentResult.Errors.IndexOf(next) + 1, next));
                     _logger.Error(logError, customer: customer);
+
+                    //cancel recurring payment
+                    var cancelErrors = CancelRecurringPayment(recurringPayment);
+                    cancelErrors.ToList().ForEach(error => _logger.Error(error));
+
+                    //notify a customer about failed payment
+                    _workflowMessageService.SendRecurringPaymentFailedAndCancelledCustomerNotification(recurringPayment, initialOrder.CustomerLanguageId);
                 }
             }
             catch (Exception exc)

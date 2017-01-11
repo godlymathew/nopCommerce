@@ -106,6 +106,11 @@ namespace Nop.Core.Domain.Messages
         /// </summary>
         public const string RecurringPaymentCancelledStoreOwnerNotification = "RecurringPaymentCancelled.StoreOwnerNotification";
 
+        /// <summary>
+        /// Represents system name of notification customer about failed and cancelled recurring order
+        /// </summary>
+        public const string RecurringPaymentFailedAndCancelledCustomerNotification = "RecurringPaymentFailedAndCancelled.CustomerNotification";
+
         #endregion
 
         #region Newsletter

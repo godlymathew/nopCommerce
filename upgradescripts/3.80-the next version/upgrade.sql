@@ -3616,3 +3616,12 @@ UPDATE [Setting]
 SET [Name] = N'tax.taxprovider.fixedorbycountrystatezip.taxcategoryid' + SUBSTRING(name, 40, len(name))
 WHERE [Name] like N'tax.taxprovider.fixedrate.taxcategoryid%'
 GO
+
+-- new message template
+IF NOT EXISTS (SELECT 1 FROM [dbo].[MessageTemplate] WHERE [Name] = N'RecurringPaymentFailedAndCancelled.CustomerNotification')
+BEGIN
+    DECLARE @NewLine AS CHAR(2) = CHAR(13) + CHAR(10)
+    INSERT [dbo].[MessageTemplate] ([Name], [BccEmailAddresses], [Subject], [Body], [IsActive], [AttachedDownloadId], [EmailAccountId], [LimitedToStores], [DelayPeriodId]) 
+    VALUES (N'RecurringPaymentFailedAndCancelled.CustomerNotification', NULL, N'%Store.Name%. Recurring payment %RecurringPayment.ID% cancelled', N'<p>' + @NewLine + '<a href=\"%Store.URL%\">%Store.Name%</a>' + @NewLine + '<br />' + @NewLine + '<br />' + @NewLine + 'Hello %Customer.FullName%,' + @NewLine + '<br />' + @NewLine + 'It appears your credit card didn''t go through for this recurring payment (<a href=\"%Order.OrderURLForCustomer%\" target=\"_blank\">%Order.OrderURLForCustomer%</a>)' + @NewLine + '<br />' + @NewLine + 'So your subscription has been canceled.' + @NewLine + '</p>' + @NewLine, 1, 0, 0, 0, 0)
+END
+GO
