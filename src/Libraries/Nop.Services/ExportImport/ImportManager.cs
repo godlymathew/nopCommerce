@@ -1317,6 +1317,9 @@ namespace Nop.Services.ExportImport
                             case "DisplayOrder":
                                 manufacturer.DisplayOrder = property.IntValue;
                                 break;
+                            case "SeName":
+                                seName = property.StringValue;
+                                break;
                         }
                     }
 

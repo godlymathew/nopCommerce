@@ -477,7 +477,7 @@ namespace Nop.Services.ExportImport
                 xmlWriter.WriteString("PriceRanges", manufacturer.PriceRanges, IgnoreExportManufacturerProperty(m => m.PriceRanges));
                 xmlWriter.WriteString("Published", manufacturer.Published, IgnoreExportManufacturerProperty(m => m.Published));
                 xmlWriter.WriteString("Deleted", manufacturer.Deleted, true);
-                xmlWriter.WriteString("DisplayOrder");
+                xmlWriter.WriteString("DisplayOrder", manufacturer.DisplayOrder);
                 xmlWriter.WriteString("CreatedOnUtc", manufacturer.CreatedOnUtc, IgnoreExportManufacturerProperty(m => m.CreatedOn));
                 xmlWriter.WriteString("UpdatedOnUtc", manufacturer.UpdatedOnUtc, IgnoreExportManufacturerProperty(m => m.UpdatedOn));
 
